@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
+
 from .config import settings
 
 # The engine is the core interface to the database
@@ -14,14 +15,16 @@ engine = create_engine(
 # Each request gets its own session
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 # Base class for all our models
 class Base(DeclarativeBase):
-   pass
+    pass
+
 
 # Dependency
 def get_db():
-   db = SessionLocal()
-   try:
-      yield db
-   finally:
-      db.close()
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
