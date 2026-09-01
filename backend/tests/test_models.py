@@ -21,9 +21,7 @@ def test_db():
         connect_args={"check_same_thread": False},
         poolclass=StaticPool,
     )
-    testing_session_local = sessionmaker(
-        autocommit=False, autoflush=False, bind=engine
-    )
+    testing_session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     Base.metadata.create_all(bind=engine)
 
     db = testing_session_local()
@@ -131,6 +129,8 @@ def test_note_updated_at(test_db):
     original_updated_at = note.updated_at
 
     # Simulate time passing
+    import time
+
     time.sleep(1)
 
     note.content = "Updated content"

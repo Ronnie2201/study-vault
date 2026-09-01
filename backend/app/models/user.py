@@ -18,13 +18,11 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     full_name: Mapped[str] = mapped_column(String(100), nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        default=lambda: datetime.now(UTC),
-        nullable=False,
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
 
     # Relationships
-    subjects: Mapped[list["Subject"]] = relationship(
+    subjects: Mapped[list[Subject]] = relationship(
         back_populates="user",
         cascade="all, delete-orphan",
         lazy="selectin",  # Efficient loading strategy

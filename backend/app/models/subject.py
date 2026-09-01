@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 from datetime import UTC, datetime
@@ -13,9 +14,7 @@ class Subject(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"),
-        index=True,
-        nullable=False,
+        ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False
     )
     name: Mapped[str] = mapped_column(String(200), nullable=False)
     code: Mapped[str] = mapped_column(
@@ -25,16 +24,14 @@ class Subject(Base):
         String(7), default="#3B82F6"
     )  # Hex color for UI
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        default=lambda: datetime.now(UTC),
-        nullable=False,
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
 
     # Relationships
-    user: Mapped["User"] = relationship(back_populates="subjects")
-    notes: Mapped[list["Note"]] = relationship(
+    user: Mapped[User] = relationship(back_populates="subjects")
+    notes: Mapped[list[Note]] = relationship(
         back_populates="subject", cascade="all, delete-orphan"
     )
-    deadlines: Mapped[list["Deadline"]] = relationship(
+    deadlines: Mapped[list[Deadline]] = relationship(
         back_populates="subject", cascade="all, delete-orphan"
     )

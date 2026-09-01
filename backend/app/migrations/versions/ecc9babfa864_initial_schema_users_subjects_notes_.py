@@ -44,9 +44,7 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_subjects_id"), "subjects", ["id"], unique=False)
-    op.create_index(
-        op.f("ix_subjects_user_id"), "subjects", ["user_id"], unique=False
-    )
+    op.create_index(op.f("ix_subjects_user_id"), "subjects", ["user_id"], unique=False)
     op.create_table(
         "deadlines",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -55,20 +53,12 @@ def upgrade() -> None:
         sa.Column("due_date", sa.DateTime(timezone=True), nullable=False),
         sa.Column(
             "type",
-            sa.Enum(
-                "EXAM",
-                "ASSIGNMENT",
-                "PROJECT",
-                "OTHER",
-                name="deadlinetype",
-            ),
+            sa.Enum("EXAM", "ASSIGNMENT", "PROJECT", "OTHER", name="deadlinetype"),
             nullable=False,
         ),
         sa.Column("is_completed", sa.Boolean(), nullable=False),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["subject_id"], ["subjects.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["subject_id"], ["subjects.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(
@@ -76,10 +66,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f("ix_deadlines_id"), "deadlines", ["id"], unique=False)
     op.create_index(
-        op.f("ix_deadlines_subject_id"),
-        "deadlines",
-        ["subject_id"],
-        unique=False,
+        op.f("ix_deadlines_subject_id"), "deadlines", ["subject_id"], unique=False
     )
     op.create_table(
         "notes",
@@ -89,15 +76,11 @@ def upgrade() -> None:
         sa.Column("content", sa.Text(), nullable=False),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["subject_id"], ["subjects.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["subject_id"], ["subjects.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_notes_id"), "notes", ["id"], unique=False)
-    op.create_index(
-        op.f("ix_notes_subject_id"), "notes", ["subject_id"], unique=False
-    )
+    op.create_index(op.f("ix_notes_subject_id"), "notes", ["subject_id"], unique=False)
     # ### end Alembic commands ###
 
 

@@ -2,8 +2,9 @@
 
 from datetime import UTC, datetime, timedelta
 
-from .database import SessionLocal, engine, Base
-from .models import User, Subject, Note, Deadline, DeadlineType
+from .database import Base, SessionLocal, engine
+from .models import Deadline, DeadlineType, Note, Subject, User
+
 
 
 def seed_database():
@@ -90,7 +91,6 @@ Break rational functions into simpler fractions.
                 title="AVL Trees",
                 content="""# AVL Trees
 Self-balancing BST.
-
 **Balance factor:** height(left) - height(right)
 - Must be between -1 and 1
 - Rotations restore balance after insert/delete""",
