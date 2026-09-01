@@ -1,24 +1,27 @@
 """Development seed data. Run with: python -m app.seed"""
 
 from datetime import datetime, timedelta, timezone
+
 from sqlalchemy.orm import Session
+
 from .database import SessionLocal, engine, Base
 from .models import User, Subject, Note, Deadline, DeadlineType
 
+
 def seed_database():
     """Seed the database with sample data for development."""
-    
+
     # Create tables if they don't exist (for fresh databases)
     Base.metadata.create_all(bind=engine)
-    
+
     db = SessionLocal()
-    
+
     try:
         # Check if we already have data
         if db.query(User).count() > 0:
             print("Database already seeded. Skipping.")
             return
-        
+
         # Create demo user
         demo_user = User(
             email="demo@studyvault.com",
@@ -27,7 +30,7 @@ def seed_database():
         )
         db.add(demo_user)
         db.flush()  # Get the user ID
-        
+
         # Create subjects
         calculus = Subject(
             user_id=demo_user.id,
@@ -43,14 +46,13 @@ def seed_database():
         )
         db.add_all([calculus, data_structures])
         db.flush()
-        
+
         # Create notes
         notes = [
             Note(
                 subject_id=calculus.id,
                 title="Integration by Parts",
                 content="""# Integration by Parts
-                
 The formula is: ∫u dv = uv - ∫v du
 
 **Key steps:**
@@ -65,7 +67,6 @@ The formula is: ∫u dv = uv - ∫v du
                 subject_id=calculus.id,
                 title="Partial Fractions",
                 content="""# Partial Fractions
-                
 Break rational functions into simpler fractions.
 
 **Cases:**
@@ -77,7 +78,6 @@ Break rational functions into simpler fractions.
                 subject_id=data_structures.id,
                 title="Binary Search Trees",
                 content="""# BST Properties
-                
 - Left subtree < root
 - Right subtree > root
 - Average case: O(log n) for search/insert/delete
@@ -91,7 +91,6 @@ Break rational functions into simpler fractions.
                 subject_id=data_structures.id,
                 title="AVL Trees",
                 content="""# AVL Trees
-                
 Self-balancing BST.
 
 **Balance factor:** height(left) - height(right)
@@ -100,7 +99,7 @@ Self-balancing BST.
             ),
         ]
         db.add_all(notes)
-        
+
         # Create deadlines
         now = datetime.now(timezone.utc)
         deadlines = [
@@ -141,16 +140,17 @@ Self-balancing BST.
             ),
         ]
         db.add_all(deadlines)
-        
+
         db.commit()
         print("Database seeded successfully with demo data!")
-        
+
     except Exception as e:
         db.rollback()
         print(f"Error seeding database: {e}")
         raise
     finally:
         db.close()
+
 
 if __name__ == "__main__":
     seed_database()
