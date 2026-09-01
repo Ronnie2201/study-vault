@@ -1,22 +1,21 @@
+import sys
 from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from pathlib import Path
 
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
-import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parents[2]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from app.database import Base
-from app.models import User, Subject, Note, Deadline #import all models
 from app.config import settings
+from app.database import Base
+from app.models import Deadline, Note, Subject, User
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-#Use our application settings
+# Use our application settings
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
@@ -64,7 +63,7 @@ def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
     # Read the default settings block from alembic.ini
     configuration = config.get_section(config.config_ini_section, {})
-    
+
     # Force the engine to use the database URL set from your application settings
     configuration["sqlalchemy.url"] = config.get_main_option("sqlalchemy.url")
 
@@ -76,13 +75,11 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, 
-            target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata
         )
 
         with context.begin_transaction():
             context.run_migrations()
-
 
 
 if context.is_offline_mode():

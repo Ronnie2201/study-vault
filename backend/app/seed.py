@@ -1,8 +1,6 @@
 """Development seed data. Run with: python -m app.seed"""
 
-from datetime import datetime, timedelta, timezone
-
-from sqlalchemy.orm import Session
+from datetime import UTC, datetime, timedelta
 
 from .database import SessionLocal, engine, Base
 from .models import User, Subject, Note, Deadline, DeadlineType
@@ -101,7 +99,7 @@ Self-balancing BST.
         db.add_all(notes)
 
         # Create deadlines
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         deadlines = [
             Deadline(
                 subject_id=calculus.id,
