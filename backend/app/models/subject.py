@@ -1,17 +1,11 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..database import Base
-
-if TYPE_CHECKING:
-    from .deadline import Deadline
-    from .note import Note
-    from .user import User
 
 
 class Subject(Base):
@@ -37,10 +31,10 @@ class Subject(Base):
     )
 
     # Relationships
-    user: Mapped[User] = relationship(back_populates="subjects")
-    notes: Mapped[list[Note]] = relationship(
+    user: Mapped["User"] = relationship(back_populates="subjects")
+    notes: Mapped[list["Note"]] = relationship(
         back_populates="subject", cascade="all, delete-orphan"
     )
-    deadlines: Mapped[list[Deadline]] = relationship(
+    deadlines: Mapped[list["Deadline"]] = relationship(
         back_populates="subject", cascade="all, delete-orphan"
     )

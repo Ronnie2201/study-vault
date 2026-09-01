@@ -2,15 +2,11 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from enum import Enum
-from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, Enum as SQLAlchemyEnum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..database import Base
-
-if TYPE_CHECKING:
-    from .subject import Subject
 
 
 class DeadlineType(str, Enum):
@@ -52,4 +48,4 @@ class Deadline(Base):
     )
 
     # Relationships
-    subject: Mapped[Subject] = relationship(back_populates="deadlines")
+    subject: Mapped["Subject"] = relationship(back_populates="deadlines")
