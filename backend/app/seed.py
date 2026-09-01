@@ -6,7 +6,6 @@ from .database import Base, SessionLocal, engine
 from .models import Deadline, DeadlineType, Note, Subject, User
 
 
-
 def seed_database():
     """Seed the database with sample data for development."""
 

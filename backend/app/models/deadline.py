@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, String
 from sqlalchemy import Enum as SQLAlchemyEnum
@@ -9,6 +10,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..database import Base
 
+if TYPE_CHECKING:
+    from app.models.subject import Subject
 
 class DeadlineType(str, Enum):
     EXAM = "exam"

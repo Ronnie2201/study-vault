@@ -129,7 +129,6 @@ def test_note_updated_at(test_db):
     original_updated_at = note.updated_at
 
     # Simulate time passing
-    import time
 
     time.sleep(1)
 
