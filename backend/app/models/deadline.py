@@ -13,6 +13,7 @@ from ..database import Base
 if TYPE_CHECKING:
     from app.models.subject import Subject
 
+
 class DeadlineType(str, Enum):
     EXAM = "exam"
     ASSIGNMENT = "assignment"

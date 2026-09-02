@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 from datetime import UTC, datetime
@@ -11,6 +10,7 @@ from ..database import Base
 
 if TYPE_CHECKING:
     from app.models.subject import Subject
+
 
 class Note(Base):
     __tablename__ = "notes"

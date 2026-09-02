@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .routers import health, auth
+from .routers import auth, health
 
 
 def create_application() -> FastAPI:

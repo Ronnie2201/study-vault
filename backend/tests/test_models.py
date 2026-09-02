@@ -42,9 +42,7 @@ def test_create_user(test_db):
     test_db.commit()
 
     # Query it back
-    saved_user = test_db.query(User).filter(
-        User.email == "test@example.com"
-    ).first()
+    saved_user = test_db.query(User).filter(User.email == "test@example.com").first()
     assert saved_user is not None
     assert saved_user.full_name == "Test User"
     assert saved_user.id is not None

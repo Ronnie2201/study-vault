@@ -11,6 +11,7 @@ from ..database import Base
 if TYPE_CHECKING:
     from app.models.subject import Subject
 
+
 class User(Base):
     __tablename__ = "users"
 

@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 from datetime import UTC, datetime
@@ -14,6 +13,7 @@ if TYPE_CHECKING:
     from app.models.note import Note
     from app.models.user import User
 
+
 class Subject(Base):
     __tablename__ = "subjects"
 
@@ -22,12 +22,8 @@ class Subject(Base):
         ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False
     )
     name: Mapped[str] = mapped_column(String(200), nullable=False)
-    code: Mapped[str] = mapped_column(
-        String(50), nullable=True
-    )  # e.g., "SMA 210"
-    color: Mapped[str] = mapped_column(
-        String(7), default="#3B82F6"
-    )  # Hex color for UI
+    code: Mapped[str] = mapped_column(String(50), nullable=True)  # e.g., "SMA 210"
+    color: Mapped[str] = mapped_column(String(7), default="#3B82F6")  # Hex color for UI
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False
     )
