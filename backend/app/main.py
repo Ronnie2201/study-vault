@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .routers import health
+from .routers import health, auth
 
 
 def create_application() -> FastAPI:
@@ -24,6 +24,7 @@ def create_application() -> FastAPI:
 
     # Register routers
     app.include_router(health.router, prefix=settings.api_v1_prefix)
+    app.include_router(auth.router, prefix=settings.api_v1_prefix)
 
     return app
 
